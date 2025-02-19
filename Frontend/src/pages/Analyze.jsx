@@ -59,9 +59,9 @@ function Analyze() {
   const formattedDate = now.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 
   return (
-    <div className='p-10 md:pt-25 flex flex-col md:flex-row  md:h-lvh gap-6 bg-black '>
+    <div className='p-10 pt-25 flex flex-col md:flex-row h-lvh gap-6 bg-black '>
       {/* Left Section */}
-      <div className='w-full md:w-3/4 md:h-6/7  flex-col border-1 border-gray-500 rounded-sm '>
+      <div className='w-full h-1/2 md:w-3/4 md:h-6/7 flex flex-col justify-between border-1 border-gray-500 rounded-sm '>
         <div className='h-11 w-full flex items-center justify-between border-b border-gray-500 text-gray-200 '>
           <label className='p-2 rounded cursor-pointer flex items-center'>
             <ArrowUpTrayIcon className="w-4 h-4  ml-3 mr-2" />
@@ -92,11 +92,11 @@ function Analyze() {
           value={text}
           onChange={(e) => setText(e.target.value)}
         />
-        <div className=' mt-2 ml-2 mr-2 flex items-center justify-between border  border-gray-500 rounded-md gap-4'>
+        <div className=' m-2 flex items-center justify-between border  border-gray-500 rounded-md gap-4'>
           <span className='text-gray-200 ml-2 pr-2 border-r border-gray-500'> {wordCount} words</span>
 
           <button
-            className='m-2 bg-[#3eb300] text-gray-100 px-2 py-2 rounded'
+            className='m-2 bg-[#3eb300] text-gray-100 p-2 rounded'
             onClick={() => analyzeInfoApi(text, dispatch)}
           >
             {loading ? 'Analyzing...' : 'Check Authenticity'}
@@ -118,20 +118,21 @@ function Analyze() {
           </>
         )}
       </div> */}
-      <div className='w-full md:w-1/4 md:h-2/4 p-4 border rounded flex flex-col items-center justify-center border-gray-500'>
+
+      <div className='w-full md:w-1/4 h-1/2 p-4 border rounded flex flex-col items-center justify-center border-gray-500'>
 
         <div className='h-36 w-36'>
-          <PieChart score={90} authenticity={"Real"} />
+          <PieChart score={90} authenticity={"Fake"} />
           {/* <PieChart score={result.confidence} authenticity={result.authenticity}/> */}
         </div>
         <p
-          className={`mt-4 font-bold ${result?.authenticity === "Real" ? "text-green-500" : "text-red-500"
+          className={`mt-5 font-bold ${result?.authenticity === "Real" ? "text-green-500" : "text-red-500"
             }`}
         >
-          <span>90%</span> Confidence
+          <span>{`${result?.confidence!==null ?"90":"80"}%`}</span> Confidence
         </p>
 
-        <p className='text-sm text-white'>{formattedDate}</p>
+        <p className='text-sm text-white mt-1'>{formattedDate}</p>
       </div>
     </div>
   );
