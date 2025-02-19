@@ -3,12 +3,11 @@ import { Link } from 'react-router-dom';
 "use client";
 import React from "react";
 import { SparklesCore } from "../components/ui/sparkles";
+import Button from "../components/ui/Button";
 
 function Home() {
   return (
-
     // <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className='text-center p-10'>
-
     //   <h1 className='text-4xl font-bold text-blue-600'>Misinformation Detection</h1>
     //   <p className='mt-4 text-lg'>Verify information authenticity with AI.</p>
     //   <Link to='/analyze' className='mt-5 inline-block bg-blue-500 text-white px-6 py-2 rounded-lg'>Get Started</Link>
@@ -22,7 +21,6 @@ function Home() {
           MediVerus.ai
         </h1>
         <p className='mt-4 text-lg text-gray-100 mb-5'>Verify information authenticity with AI.</p>
-
 
         <div className="w-[40rem] h-40 relative">
           {/* Gradients */}
@@ -47,19 +45,15 @@ function Home() {
           {/* Radial Gradient to prevent sharp edges */}
           <div
             className="absolute flex justify-center inset-0 w-full h-full bg-black [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]">
-         
           </div>
-          {/* <Link
-              to='/analyze'
-              className='absolute mt-4 h-10 z-[50] text-gray-100 backdrop-blur-2xl bg-indigo-500 px-6 py-2 rounded-lg'>
-              Get Started
-            </Link> */}
-
+          <Link
+            to='/analyze'
+            className='absolute ml-60 -mt-25 '>
+            <Button className={``} />
+          </Link>
         </div>
       </div>
-
     </div>
-
   );
 }
 export default Home;

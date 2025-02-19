@@ -96,7 +96,7 @@ function Analyze() {
           <span className='text-gray-200 ml-2 pr-2 border-r border-gray-500'> {wordCount} words</span>
 
           <button
-            className='m-1 bg-[#3eb300] text-gray-100 px-4 py-2 rounded'
+            className='m-2 bg-[#3eb300] text-gray-100 px-2 py-2 rounded'
             onClick={() => analyzeInfoApi(text, dispatch)}
           >
             {loading ? 'Analyzing...' : 'Check Authenticity'}
