@@ -48,7 +48,7 @@ function Home() {
           </div>
           <Link
             to='/analyze'
-            className='absolute ml-60 -mt-25 '>
+            className='absolute ml-65 -mt-25 '>
             <Button className={``} />
           </Link>
         </div>
