@@ -2,6 +2,7 @@
 import re
 import nltk
 import pickle
+nltk.download('stopwords')
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
 stpwrds = list(stopwords.words('english'))
