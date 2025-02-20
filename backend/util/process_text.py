@@ -3,6 +3,7 @@ import re
 import nltk
 import pickle
 nltk.download('stopwords')
+nltk.download('punkt') 
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
 stpwrds = list(stopwords.words('english'))
