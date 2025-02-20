@@ -28,7 +28,7 @@ def predict(request):
                 )
                 
         try:
-                vectorized_input_data = process_text(input_data)
+            vectorized_input_data = process_text(input_data)
         except ValueError as e:
                 return Response(
                     {"error": str(e)},
@@ -36,7 +36,7 @@ def predict(request):
                 )
         
         try:
-                prediction = model.predict(vectorized_input_data)
+            prediction = model.predict(vectorized_input_data)
         except Exception as e:
                 return Response(
                     {"error": f"Model prediction error: {str(e)}"},
@@ -45,9 +45,10 @@ def predict(request):
         
         
         return Response({
-            "input_data": input_data, 
-            "isFakeNews": prediction[0]
+                "input_data": input_data, 
+                "isFakeNews": prediction[0]
             }, status = status.HTTP_200_OK)
+        
     except Exception as e:
         return Response(
             {"error": f"Unexpected error: {str(e)}"},
