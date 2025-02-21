@@ -105,34 +105,21 @@ function Analyze() {
       </div>
 
       {/* Right Section */}
-      {/* <div className='w-full md:w-1/4 md:h-2/4 p-4 border rounded bg-gray-100'>
-        {result && (
-          <>
-            <h3 className='text-lg font-semibold'>Result:</h3>
-            <p>Authenticity: <span className='font-bold'>{result.authenticity}</span></p>
-            <p>Confidence: <span className='font-bold'>{result.confidence}</span></p>
-            <h4 className='mt-3 text-md font-semibold'>Confidence Score:</h4>
-            <Pie data={chartData} />
-            <h4 className='mt-3 text-md font-semibold'>Highlighted Information:</h4>
-            <HighlightedText text={text} result={result} />
-          </>
-        )}
-      </div> */}
 
       <div className='w-full md:w-1/4 h-1/2 p-4 border rounded flex flex-col items-center justify-center border-gray-500'>
+        {result && (
+          <>
+            <div className='h-36 w-36'>
+              {/* <PieChart score={90} authenticity={"Fake"} /> */}
+              <PieChart score={result.confidenceScoreOfReal} authenticity={result.isFakeNews} />
+            </div>
+            <p className={`mt-5 font-bold ${result.isFakeNews ? 'text-red-500' : 'text-green-500'}`}>
+              {result.confidenceScoreOfReal}% Confidence
+            </p>
 
-        <div className='h-36 w-36'>
-          <PieChart score={90} authenticity={"Fake"} />
-          {/* <PieChart score={result.confidence} authenticity={result.authenticity}/> */}
-        </div>
-        <p
-          className={`mt-5 font-bold ${result?.authenticity === "Real" ? "text-green-500" : "text-red-500"
-            }`}
-        >
-          <span>{`${result?.confidence!==null ?"90":"80"}%`}</span> Confidence
-        </p>
-
-        <p className='text-sm text-white mt-1'>{formattedDate}</p>
+            <p className='text-sm text-white mt-1'>{formattedDate}</p>
+          </>
+        )}
       </div>
     </div>
   );

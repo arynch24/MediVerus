@@ -1,8 +1,10 @@
+import { analyzeRequest, analyzeSuccess, analyzeFailure } from '../redux/infoSlice';
+
 export const analyzeInfoApi = async (text, dispatch) => {
     dispatch(analyzeRequest());
   
     try {
-      const response = await fetch('https://api.openweathermap.org/data/2.5/weather?units=metric&q=ghazipur&appid=b13b9168acf4508c03798d8a61654ad2', {
+      const response = await fetch('https://mediverus-backend.up.railway.app/api/v1/predict/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -15,6 +17,7 @@ export const analyzeInfoApi = async (text, dispatch) => {
       }
 
       const data = await response.json();
+      console.log(data);
       dispatch(analyzeSuccess(data));
     } catch (error) {
       dispatch(analyzeFailure());

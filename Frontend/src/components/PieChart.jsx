@@ -6,7 +6,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 const PieChart = ({score,authenticity}) => {
 
-    const real=authenticity==="Real";
+    const real=authenticity===0;
 
     const data = {
         labels: [],
