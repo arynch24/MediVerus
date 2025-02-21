@@ -1,6 +1,6 @@
 import { analyzeRequest, analyzeSuccess, analyzeFailure } from '../redux/infoSlice';
 
-export const analyzeInfoApi = async (text, dispatch) => {
+export const analyzeInfoApi = async (input, dispatch) => {
     dispatch(analyzeRequest());
   
     try {
@@ -9,7 +9,7 @@ export const analyzeInfoApi = async (text, dispatch) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ text }),
+        body: JSON.stringify({ input}),
       });
   
       if (!response.ok) {
