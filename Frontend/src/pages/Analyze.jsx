@@ -122,8 +122,7 @@ function Analyze() {
         {result && (
           <>
             <div className='h-36 w-36'>
-              {/* <PieChart score={90} authenticity={"Fake"} /> */}
-              <PieChart score={result.confidenceScoreOfReal} authenticity={result.isFakeNews} />
+              <PieChart score={result.isFakeNews ? result.confidenceScoreOfFake : result.confidenceScoreOfReal} authenticity={result.isFakeNews} />
             </div>
             <p className={`mt-5 font-bold ${result.isFakeNews ? 'text-red-500' : 'text-green-500'}`}>
 
