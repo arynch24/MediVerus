@@ -114,7 +114,8 @@ function Analyze() {
               <PieChart score={result.confidenceScoreOfReal} authenticity={result.isFakeNews} />
             </div>
             <p className={`mt-5 font-bold ${result.isFakeNews ? 'text-red-500' : 'text-green-500'}`}>
-              {result.confidenceScoreOfReal.toFixed(2)}% Confidence
+
+              {result.isFakeNews ? result.confidenceScoreOfFake.toFixed(2) : result.confidenceScoreOfReal.toFixed(2)}% Confidence
             </p>
 
             <p className='text-sm text-white mt-1'>{formattedDate}</p>
