@@ -19,26 +19,38 @@ function Analyze() {
 
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
-    if (file && file.type === "application/pdf") {
-      const reader = new FileReader();
-      reader.readAsArrayBuffer(file);
-      reader.onloadend = async () => {
+
+    // Restrict file upload to only PDFs
+    if (!file || file.type !== "application/pdf") {
+      alert("Please upload a valid PDF file.");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.readAsArrayBuffer(file);
+    reader.onloadend = async () => {
+      try {
         const pdf = await pdfjsLib.getDocument({ data: reader.result }).promise;
         let extractedText = '';
-        console.log(extractedText);
+
         for (let i = 1; i <= pdf.numPages; i++) {
-          console.log(textContent.items.map(item => item.str))
           const page = await pdf.getPage(i);
           const textContent = await page.getTextContent();
+
+          // Logging after textContent is defined
+          console.log(textContent.items.map(item => item.str));
+
           extractedText += textContent.items.map(item => item.str).join(' ') + '\n';
         }
+
         setText(extractedText);
         setAnimate(true);
         setTimeout(() => setAnimate(false), 1000);
-      };
-    } else {
-      alert("Please upload a valid PDF file.");
-    }
+      } catch (error) {
+        console.error("Error reading PDF:", error);
+        alert("Failed to extract text from PDF. Please try again.");
+      }
+    };
   };
 
   const wordCount = text.trim().split(/\s+/).filter(word => word).length;
