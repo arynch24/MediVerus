@@ -8,11 +8,16 @@ from pathlib import Path
 NLTK_DATA_PATH = "/root/nltk_data"
 
 # Set NLTK data path
+NLTK_DATA_PATH = "/root/nltk_data"
 nltk.data.path.append(NLTK_DATA_PATH)
 
-# Download only if not already present
-for package in ["stopwords", "wordnet", "punkt", "punkt_tab"]:
-    if not Path(NLTK_DATA_PATH, package).exists():
+# List of required NLTK packages
+nltk_packages = ["stopwords", "wordnet", "punkt", "punkt_tab"]
+
+# Ensure each package exists before downloading
+for package in nltk_packages:
+    package_path = os.path.join(NLTK_DATA_PATH, "corpora" if package in ["stopwords", "wordnet"] else "tokenizers", package)
+    if not os.path.exists(package_path):
         nltk.download(package, download_dir=NLTK_DATA_PATH)
         
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
