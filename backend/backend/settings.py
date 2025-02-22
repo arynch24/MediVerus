@@ -2,6 +2,19 @@ import os
 from pathlib import Path
 import sys
 
+import nltk
+from pathlib import Path
+
+NLTK_DATA_PATH = "/root/nltk_data"
+
+# Set NLTK data path
+nltk.data.path.append(NLTK_DATA_PATH)
+
+# Download only if not already present
+for package in ["stopwords", "wordnet", "punkt", "punkt_tab"]:
+    if not Path(NLTK_DATA_PATH, package).exists():
+        nltk.download(package, download_dir=NLTK_DATA_PATH)
+        
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 

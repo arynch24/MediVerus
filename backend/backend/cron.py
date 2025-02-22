@@ -13,8 +13,12 @@ logger = logging.getLogger("cron")
 
 def start_scheduler():
     """Starts the APScheduler background job"""
+    
+    if os.environ.get("RUN_MAIN") != "true":  # Avoid duplicate schedulers
+        return
+    
     scheduler = BackgroundScheduler()
-    scheduler.add_job(retrain_model, "cron", hour=11, minute=11)
+    scheduler.add_job(retrain_model, "cron", hour=7, minute=00)
     scheduler.start()
     logger.info("Scheduler started successfully")
     
