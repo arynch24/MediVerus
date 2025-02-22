@@ -1,1 +1,12 @@
 venv
+.env
+venv/
+
+# Ignore compiled Python files
+__pycache__/
+*.pyc
+
+# Ignore data and logs
+data/
+logs/
+logs/*
