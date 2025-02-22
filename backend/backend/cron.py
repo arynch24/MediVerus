@@ -7,9 +7,17 @@ import logging
 from dotenv import load_dotenv
 load_dotenv()
 from backend import settings
+from apscheduler.schedulers.background import BackgroundScheduler
 
+logger = logging.getLogger("cron")
 
-logger = logging.getLogger('cron')
+def start_scheduler():
+    """Starts the APScheduler background job"""
+    scheduler = BackgroundScheduler()
+    scheduler.add_job(retrain_model, "cron", hour=11, minute=11)
+    scheduler.start()
+    logger.info("Scheduler started successfully")
+    
 
 def retrain_model():
     """Cron job to retrain the model"""

@@ -29,8 +29,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
+    'backend.apps.BackendConfig',
     'api',
-    'django_crontab',
 ]
 
 
@@ -41,39 +41,6 @@ LOGS_DIR = os.path.join(BASE_DIR, 'logs')
 if not os.path.exists(LOGS_DIR):
     os.makedirs(LOGS_DIR)
 
-
-# Add this logging configuration - locally
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'formatters': {
-#         'verbose': {
-#             'format': '{levelname} {asctime} {module} {message}',
-#             'style': '{',
-#         },
-#     },
-#     'handlers': {
-#         'cron_handler': {
-#             'level': 'INFO',
-#             'class': 'logging.FileHandler',
-#             'filename': os.path.join(LOGS_DIR, 'model_retrain.log'),
-#             'formatter': 'verbose',
-#         },
-#     },
-#     'loggers': {
-#         'cron': {
-#             'handlers': ['cron_handler'],
-#             'level': 'INFO',
-#             'propagate': True,
-#         },
-#     },
-# }
-# Cron job settngs
-# CRONJOBS = [
-#     ('0 7 * * *', 'backend.cron.retrain_model', [], {}, f'>{os.path.join(LOGS_DIR, "model_retrain.log")} 2>&1')
-# ]
-
-# In backend/settings.py
 import sys
 
 LOGGING = {
