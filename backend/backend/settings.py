@@ -1,4 +1,6 @@
+import os
 from pathlib import Path
+import sys
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,7 +30,82 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'api',
+    'django_crontab',
 ]
+
+
+# Near the top of the file, with other BASE_DIR related code
+LOGS_DIR = os.path.join(BASE_DIR, 'logs')
+
+# Create logs directory if it doesn't exist
+if not os.path.exists(LOGS_DIR):
+    os.makedirs(LOGS_DIR)
+
+
+# Add this logging configuration - locally
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'formatters': {
+#         'verbose': {
+#             'format': '{levelname} {asctime} {module} {message}',
+#             'style': '{',
+#         },
+#     },
+#     'handlers': {
+#         'cron_handler': {
+#             'level': 'INFO',
+#             'class': 'logging.FileHandler',
+#             'filename': os.path.join(LOGS_DIR, 'model_retrain.log'),
+#             'formatter': 'verbose',
+#         },
+#     },
+#     'loggers': {
+#         'cron': {
+#             'handlers': ['cron_handler'],
+#             'level': 'INFO',
+#             'propagate': True,
+#         },
+#     },
+# }
+# Cron job settngs
+# CRONJOBS = [
+#     ('0 7 * * *', 'backend.cron.retrain_model', [], {}, f'>{os.path.join(LOGS_DIR, "model_retrain.log")} 2>&1')
+# ]
+
+# In backend/settings.py
+import sys
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'stream': sys.stdout,
+            'formatter': 'verbose',
+        },
+    },
+    'loggers': {
+        'cron': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}
+
+# Update CRONJOBS to use stdout
+CRONJOBS = [
+    ('0 7 * * *', 'backend.cron.retrain_model')  
+]
+
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',  
@@ -46,7 +123,7 @@ MIDDLEWARE = [
 # CORS_ALLOW_ALL_ORIGIN = True
 
 CORS_ALLOWED_ORIGINS = [
-    "https://medi-verus.vercel.app/",
+    "https://medi-verus.vercel.app",
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -122,3 +199,4 @@ STATIC_URL = "/static/"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
