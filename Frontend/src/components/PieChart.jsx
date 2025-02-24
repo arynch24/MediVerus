@@ -6,7 +6,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 const PieChart = ({score,authenticity}) => {
 
-    const real=authenticity==="Real";
+    const real=authenticity===0;
 
     const data = {
         labels: [],
@@ -54,7 +54,7 @@ const PieChart = ({score,authenticity}) => {
 
             // Draw Text
             ctx.fillText(`Likely`, centerX, centerY - 10);
-            ctx.fillText(authenticity, centerX, centerY + 10);
+            ctx.fillText(real?"Real":"Fake", centerX, centerY + 10);
             ctx.font = `${(height / 10).toFixed(2)}px Arial`;
             ctx.restore();
         },

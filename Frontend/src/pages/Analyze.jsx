@@ -19,26 +19,38 @@ function Analyze() {
 
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
-    if (file && file.type === "application/pdf") {
-      const reader = new FileReader();
-      reader.readAsArrayBuffer(file);
-      reader.onloadend = async () => {
+
+    // Restrict file upload to only PDFs
+    if (!file || file.type !== "application/pdf") {
+      alert("Please upload a valid PDF file.");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.readAsArrayBuffer(file);
+    reader.onloadend = async () => {
+      try {
         const pdf = await pdfjsLib.getDocument({ data: reader.result }).promise;
         let extractedText = '';
-        console.log(extractedText);
+
         for (let i = 1; i <= pdf.numPages; i++) {
-          console.log(textContent.items.map(item => item.str))
           const page = await pdf.getPage(i);
           const textContent = await page.getTextContent();
+
+          // Logging after textContent is defined
+          console.log(textContent.items.map(item => item.str));
+
           extractedText += textContent.items.map(item => item.str).join(' ') + '\n';
         }
+
         setText(extractedText);
         setAnimate(true);
         setTimeout(() => setAnimate(false), 1000);
-      };
-    } else {
-      alert("Please upload a valid PDF file.");
-    }
+      } catch (error) {
+        console.error("Error reading PDF:", error);
+        alert("Failed to extract text from PDF. Please try again.");
+      }
+    };
   };
 
   const wordCount = text.trim().split(/\s+/).filter(word => word).length;
@@ -105,34 +117,21 @@ function Analyze() {
       </div>
 
       {/* Right Section */}
-      {/* <div className='w-full md:w-1/4 md:h-2/4 p-4 border rounded bg-gray-100'>
-        {result && (
-          <>
-            <h3 className='text-lg font-semibold'>Result:</h3>
-            <p>Authenticity: <span className='font-bold'>{result.authenticity}</span></p>
-            <p>Confidence: <span className='font-bold'>{result.confidence}</span></p>
-            <h4 className='mt-3 text-md font-semibold'>Confidence Score:</h4>
-            <Pie data={chartData} />
-            <h4 className='mt-3 text-md font-semibold'>Highlighted Information:</h4>
-            <HighlightedText text={text} result={result} />
-          </>
-        )}
-      </div> */}
 
       <div className='w-full md:w-1/4 h-1/2 p-4 border rounded flex flex-col items-center justify-center border-gray-500'>
+        {result && (
+          <>
+            <div className='h-36 w-36'>
+              <PieChart score={result.isFakeNews ? result.confidenceScoreOfFake : result.confidenceScoreOfReal} authenticity={result.isFakeNews} />
+            </div>
+            <p className={`mt-5 font-bold ${result.isFakeNews ? 'text-red-500' : 'text-green-500'}`}>
 
-        <div className='h-36 w-36'>
-          <PieChart score={90} authenticity={"Fake"} />
-          {/* <PieChart score={result.confidence} authenticity={result.authenticity}/> */}
-        </div>
-        <p
-          className={`mt-5 font-bold ${result?.authenticity === "Real" ? "text-green-500" : "text-red-500"
-            }`}
-        >
-          <span>{`${result?.confidence!==null ?"90":"80"}%`}</span> Confidence
-        </p>
+              {result.isFakeNews ? result.confidenceScoreOfFake.toFixed(2) : result.confidenceScoreOfReal.toFixed(2)}% Confidence
+            </p>
 
-        <p className='text-sm text-white mt-1'>{formattedDate}</p>
+            <p className='text-sm text-white mt-1'>{formattedDate}</p>
+          </>
+        )}
       </div>
     </div>
   );
